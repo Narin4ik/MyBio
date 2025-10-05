@@ -148,33 +148,23 @@ p {
   gap: clamp(12px, 2.5vw, 24px);
 }
 
-.music-mobile-note{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  min-height:180px;
-  width:100%;
-  padding:24px;
-  color:#d4d4d4;
-  font-size:clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
-}
-
-.music-card.mobile-note-mode{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height: clamp(140px, 32vw, 240px);
-}
 
 .music-mobile-note{
-  text-align:center;
-  color:#d4d4d4;
-  line-height:1.35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: clamp(140px, 32vw, 220px);
+  width: 100%;
+  padding: 16px;
+  color: #d4d4d4;
   font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
+  line-height: 1.35;
 }
-
-.music-mobile-note p{ margin:0; }
+.music-mobile-note p{
+  margin: 0;
+  max-width: 24ch;
+}
 
 
 
