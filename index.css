@@ -149,27 +149,25 @@ p {
 }
 
 
-.music-mobile-note{
-  display:none;
-  min-height:160px;
-  width:100%;
-  padding:24px;
-  display:grid;
-  place-content:center;
-  text-align:center;
-  color:#d4d4d4;
-  font-size:clamp(1rem, 0.9rem + 0.3vw, 1.1rem);
-}
+.music-mobile-note{ display:none; }
 
 body.is-phone .music-card{
-  display:flex;
-  flex-direction:column;
+  display:grid;
+  place-items:center;
+  min-height: clamp(140px, 32vw, 220px);
 }
+
 body.is-phone .music-card > :not(.music-mobile-note){
   display:none !important;
 }
-body.is-phone .music-mobile-note{
-  display:grid !important;
+
+body.is-phone .music-card > .music-mobile-note{
+  display:block !important;
+  text-align:center;
+  color:#d4d4d4;
+  line-height:1.35;
+  font-size:clamp(0.95rem, 0.85rem + 0.3vw, 1.05rem);
+  padding:16px;
 }
 
 
