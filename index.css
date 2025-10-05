@@ -151,6 +151,10 @@ p {
 
 .music-mobile-note{ display:none; }
 
+body.is-phone .music-mobile-note{
+  display:block;
+}
+
 body.is-phone .music-card{
   display:grid;
   place-items:center;
