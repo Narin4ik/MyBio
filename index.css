@@ -149,9 +149,17 @@ p {
 }
 
 
-
-
-
+.music-mobile-note{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:180px;
+  width:100%;
+  padding:24px;
+  color:#d4d4d4;
+  font-size:clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+}
 
 .music-card {
   width: 100%;

@@ -16,11 +16,23 @@ const musicState = {
 
 document.addEventListener("DOMContentLoaded", () => {
   const block = document.querySelector(".music-block");
-  if (!block) {
+  if (!block) return;
+
+  if (isMobilePhone()) {
+    const card = block.querySelector(".music-card");
+    if (card) {
+      card.innerHTML = `
+        <div class="music-mobile-note">
+          At the moment, the audio player is not available for mobile devices.<br>
+          I'm working on it :)
+        </div>`;
+    }
+    block.dataset.state = "ready";
+    block.dataset.playback = "paused";
     return;
   }
 
-    musicState.elements = {
+  musicState.elements = {
     block,
     card: block.querySelector(".music-card"),
     track: block.querySelector(".music-track"),
@@ -38,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     progressSlider: block.querySelector(".music-progress-slider"),
     timeCurrent: block.querySelector(".music-time-current"),
     timeTotal: block.querySelector(".music-time-total")
-    };
-
+  };
 
   setupUI();
   loadTracks();
@@ -508,4 +519,15 @@ function renderTrack(track) {
   if (progressSlider) { progressSlider.value = 0; progressSlider.max = 0; progressSlider.style.setProperty("--p","0%"); }
   if (timeCurrent) timeCurrent.textContent = "0:00";
   if (timeTotal)   timeTotal.textContent   = "0:00";
+}
+
+function isMobilePhone() {
+  const ua = navigator.userAgent || navigator.vendor || "";
+  const isiPhone = /iPhone/i.test(ua);
+  const isAndroidPhone = /Android/i.test(ua) && /Mobile/i.test(ua);
+  const isWindowsPhone = /Windows Phone/i.test(ua);
+  const isBlackBerryPhone = /BlackBerry|BB10/i.test(ua) && /Mobile/i.test(ua);
+  const isIPad = /iPad/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
+  return (isiPhone || isAndroidPhone || isWindowsPhone || isBlackBerryPhone) && !(isIPad || isAndroidTablet);
 }
