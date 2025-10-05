@@ -575,3 +575,42 @@ body.is-phone .music-card > .music-mobile-note{
 @media (prefers-reduced-motion: reduce){
   .app-ring{ animation-duration: 2.2s; }
 }
+
+.links-row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap: clamp(10px, 1.5vw, 20px);
+  margin-top: 0;
+}
+
+.link-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: clamp(36px, 4vw, 48px);
+  height: clamp(36px, 4vw, 48px);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.link-icon:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.45);
+  background: rgba(255,255,255,0.12);
+}
+
+.link-icon img{
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  display: block;
+}
+
+.panel > .section-title + .links-row{
+  margin-top: calc(-1 * clamp(12px, 3vw, 28px) + 4px);
+}
+
+.icon-white{ filter: brightness(0) invert(1); }
