@@ -533,6 +533,45 @@ body.is-phone .music-card > .music-mobile-note{
   pointer-events: none;
 }
 
-
-
-
+.app-loader{
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  background: linear-gradient(180deg,#050505 0%,#161616 40%,#2b2b2b 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .35s ease, visibility 0s linear 0s;
+}
+.app-loader.is-hidden{
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+.app-loader-inner{
+  position: relative;
+  width: clamp(96px, 18vw, 140px);
+  height: clamp(96px, 18vw, 140px);
+}
+.app-avatar{
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,.45);
+}
+.app-avatar img{ width:100%; height:100%; object-fit: cover; display:block; }
+.app-ring{
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 6px solid rgba(255,255,255,.18);
+  border-top-color: #ffffff;
+  animation: appSpin 1s linear infinite;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset;
+}
+@keyframes appSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce){
+  .app-ring{ animation-duration: 2.2s; }
+}

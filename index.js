@@ -15,6 +15,19 @@ const musicState = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  const loaderEl = document.getElementById("app-loader");
+  if (loaderEl) {
+    document.documentElement.style.overflow = "hidden";
+    const delay = 1000 + Math.floor(Math.random() * 2001); // 1–3 сек
+    setTimeout(() => {
+      loaderEl.classList.add("is-hidden");
+      setTimeout(() => {
+        loaderEl.remove();
+        document.documentElement.style.overflow = "";
+      }, 400);
+    }, delay);
+  }
+
   const block = document.querySelector(".music-block");
   if (!block) return;
 
