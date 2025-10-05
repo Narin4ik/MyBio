@@ -150,15 +150,26 @@ p {
 
 
 .music-mobile-note{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  min-height:180px;
+  display:none;
+  min-height:160px;
   width:100%;
   padding:24px;
+  display:grid;
+  place-content:center;
+  text-align:center;
   color:#d4d4d4;
-  font-size:clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
+  font-size:clamp(1rem, 0.9rem + 0.3vw, 1.1rem);
+}
+
+body.is-phone .music-card{
+  display:flex;
+  flex-direction:column;
+}
+body.is-phone .music-card > :not(.music-mobile-note){
+  display:none !important;
+}
+body.is-phone .music-mobile-note{
+  display:grid !important;
 }
 
 

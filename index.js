@@ -19,14 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!block) return;
 
   if (isMobilePhone()) {
-    const card = block.querySelector(".music-card");
-    if (card) {
-      card.innerHTML = `
-        <div class="music-mobile-note">
-          At the moment, the audio player is not available for mobile devices.<br>
-          I'm working on it :)
-        </div>`;
-    }
+    document.body.classList.add("is-phone");
     block.dataset.state = "ready";
     block.dataset.playback = "paused";
     return;
