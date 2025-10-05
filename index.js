@@ -207,6 +207,7 @@ function loadTracks() {
   if (Array.isArray(window.MUSIC_LIST) && window.MUSIC_LIST.length) {
     musicState.tracks = window.MUSIC_LIST.map(normalizeTrack);
     buildQueue();
+    preloadPlaylistAssets(musicState.tracks, 4);
     autoStart();
     return;
   }
@@ -222,6 +223,7 @@ function loadTracks() {
       if (!Array.isArray(data) || !data.length) throw new Error("list_empty");
       musicState.tracks = data.map(normalizeTrack);
       buildQueue();
+      preloadPlaylistAssets(musicState.tracks, 4);
       autoStart();
     })
     .catch(err => {
@@ -535,4 +537,40 @@ function isMobilePhone() {
   const isIPad = /iPad/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isAndroidTablet = /Android/i.test(ua) && !/Mobile/i.test(ua);
   return (isiPhone || isAndroidPhone || isWindowsPhone || isBlackBerryPhone) && !(isIPad || isAndroidTablet);
+}
+
+function preloadTrackMedia(track){
+  if (!track) return;
+  if (track.coverSrc){
+    const l1 = document.createElement("link");
+    l1.rel = "preload";
+    l1.as = "image";
+    l1.href = track.coverSrc;
+    document.head.appendChild(l1);
+    const img = new Image();
+    img.decoding = "async";
+    img.loading = "eager";
+    img.src = track.coverSrc;
+  }
+  if (track.audioSrc){
+    const l2 = document.createElement("link");
+    l2.rel = "preload";
+    l2.as = "audio";
+    l2.href = track.audioSrc;
+    document.head.appendChild(l2);
+    fetch(track.audioSrc, { cache: "force-cache" }).catch(()=>{});
+  }
+}
+
+function preloadPlaylistAssets(tracks, eagerCount = 4){
+  if (!Array.isArray(tracks) || !tracks.length) return;
+  const eager = tracks.slice(0, eagerCount);
+  eager.forEach(preloadTrackMedia);
+  const rest = tracks.slice(eagerCount);
+  const loadRest = () => rest.forEach(preloadTrackMedia);
+  if ("requestIdleCallback" in window){
+    requestIdleCallback(loadRest, { timeout: 3000 });
+  } else {
+    window.addEventListener("load", loadRest, { once: true });
+  }
 }
