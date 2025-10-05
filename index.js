@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (isMobilePhone()) {
     const card = block.querySelector(".music-card");
     if (card) {
+      card.classList.add("mobile-note-mode");
       card.innerHTML = `
         <div class="music-mobile-note">
-          At the moment, the audio player is not available for mobile devices.<br>
-          I'm working on it :)
+          <p>Audio player isn’t available on mobile yet.<br>Working on it 🙂</p>
         </div>`;
     }
     block.dataset.state = "ready";
@@ -91,7 +91,6 @@ function setupUI() {
     iconLink
   } = musicState.elements;
 
-  // заменяем .music-artist <a> на контейнер (чтобы рендерить Markdown ссылками)
   if (artist && artist.tagName === "A") {
     const span = document.createElement("span");
     span.className = artist.className;
