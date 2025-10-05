@@ -30,5 +30,21 @@ window.MUSIC_LIST = [
     trackUrl: "https://open.spotify.com/track/0yOf4dgkVq8jbB2zxVK8Zj?si=1fed313372d5452a",
     fileName: "track-04.mp3",
     coverImage: "track-04.png"
+  },
+  {
+    id: "track-05",
+    title: "Money",
+    artist: "[The Drums](https://open.spotify.com/artist/0p5axeJsbtTCXBrRVoKjwu?si=xTt-qu7rRGGDJqiCIxtu-Q)",
+    trackUrl: "https://open.spotify.com/track/3VIJBrMpvimHEw5wtPh2wB?si=718c7800b137405f",
+    fileName: "track-05.mp3",
+    coverImage: "track-05.png"
+  },
+  {
+    id: "track-06",
+    title: "Hey Kids",
+    artist: "[Molina](https://open.spotify.com/artist/0pxhu7zSqPjBTUWMl6piHF?si=UHEUN3CVTaiOZpGTUAFcWg), [Late Verlane](https://open.spotify.com/artist/6P4APuruGUYRvwnzboQir3?si=qhoGtNofQROofNtUvQpMTA)",
+    trackUrl: "https://open.spotify.com/track/1MTLuqp279PQSb0wBnYFdo?si=b61148451a9f4d88",
+    fileName: "track-06.mp3",
+    coverImage: "track-06.png"
   }
 ];
