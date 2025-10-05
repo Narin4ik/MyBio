@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bio</title>
+  <link rel="icon" type="image/svg+xml" href="media/images/sitelogo.svg">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main class="page">
+    <section class="panel">
+      <div class="profile">
+        <img class="profile-avatar" src="media/images/avatar.png" alt="Narin's Avatar">
+        <div class="profile-heading">
+          <div class="profile-title">
+            <strong class="profile-name">Narin</strong>
+            <span class="profile-alias">(Богдан)</span>
+          </div>
+          <p class="profile-description">Just a regular person.</p>
+        </div>
+      </div>
+      <h2 class="section-title">My music playlist</h2>
+      <section class="music-block" data-state="loading" data-playback="paused">
+        <div class="music-card">
+          <a class="music-cover" href="#" target="_blank" rel="noopener noreferrer">
+            <img class="music-cover-image" src="" alt="Track cover">
+          </a>
+          <div class="music-info">
+            <a class="music-track" href="#" target="_blank" rel="noopener noreferrer">Loading...</a>
+            <a class="music-artist" href="#" target="_blank" rel="noopener noreferrer"></a>
+            <div class="music-progress">
+              <span class="music-time-current">0:00</span>
+              <input class="music-progress-slider" type="range" min="0" max="0" step="0.1" value="0" aria-label="Track position">
+              <span class="music-time-total">0:00</span>
+            </div>
+            <div class="music-controls">
+              <button class="music-btn" type="button" data-action="prev" aria-label="Previous track">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 10 18 3v14L7.5 10Zm-5.5 7V3h3v14h-3Z" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="music-btn music-btn-toggle" type="button" data-action="toggle" aria-label="Play or pause">
+                <svg class="icon-play" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 3v18l14-9-14-9Z" fill="currentColor"/>
+                </svg>
+                <svg class="icon-pause" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 4h4v16H7V4Zm6 0h4v16h-4V4Z" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="music-btn" type="button" data-action="next" aria-label="Next track">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.5 10 2 17V3l10.5 7Zm5.5-7v14h-3V3h3Z" fill="currentColor"/>
+                </svg>
+              </button>
+              <div class="music-volume">
+                <button class="music-btn" type="button" data-action="volume" aria-label="Volume">
+                  <svg class="icon-vol-on" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 9v6h3l4 4V5l-4 4H5Zm11.54 3a3.54 3.54 0 0 1-1.4 2.83l1.07 1.07a5.04 5.04 0 0 0 0-7.8l-1.07 1.07a3.54 3.54 0 0 1 1.4 2.83Zm2.46 0a6 6 0 0 1-2.38 4.77l1.07 1.06a7.5 7.5 0 0 0 0-11.66l-1.07 1.06A6 6 0 0 1 19 12Z" fill="currentColor"/>
+                  </svg>
+                <svg class="icon-vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 9v6h3l4 4V5l-4 4H5Z" fill="currentColor"/>
+                  <path d="M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                </button>
+                <div class="music-volume-rail">
+                  <input class="music-volume-slider" type="range" min="0" max="1" step="0.01" value="0.3" aria-label="Volume">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <a class="music-icon-link"
+          href="https://open.spotify.com/user/31cc3xdyfvrvgr5sjuzigqseo2ee?si=a8560c1e5e284922"
+          target="_blank" rel="noopener noreferrer" aria-label="Открыть профиль в Spotify">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Spotify_icon.svg/512px-Spotify_icon.svg.png?20220821125323"
+              alt="Spotify">
+        </a>
+        </div>
+      </section>
+    <h2 class="section-title">Links</h2>
+    </section>
+  </main>
+  <script src="music/music_list.js"></script>
+  <script src="index.js" defer></script>
+</body>
+</html>
