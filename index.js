@@ -5,12 +5,6 @@
   defaultVolume: 0.3
 };
 
-
-const preloadConfig = {
-  lookahead: 2,
-  concurrency: 2,
-  cacheLimit: 6
-};
 const musicState = {
   elements: {},
   tracks: [],
@@ -18,124 +12,7 @@ const musicState = {
   queueIndex: 0,
   audio: null,
   isPlaying: false,
-  preload: {
-    cache: new Map(),
-    pending: new Map(),
-    queue: [],
-    active: 0
-  }
 };
-
-
-const now = () => (typeof performance !== "undefined" && typeof performance.now === "function" ? performance.now() : Date.now());
-
-function trackCacheKey(track) {
-  return track?.id || track?.audioSrc || null;
-}
-
-function getCachedTrackSrc(track) {
-  const key = trackCacheKey(track);
-  if (!key) return null;
-  const entry = musicState.preload.cache.get(key);
-  if (!entry) return null;
-  entry.at = now();
-  return entry.url;
-}
-
-function rememberPrefetchedTrack(key, url, blob) {
-  const { cache } = musicState.preload;
-  cache.set(key, { url, blob, at: now() });
-  trimPrefetchCache();
-}
-
-function trimPrefetchCache() {
-  const { cache } = musicState.preload;
-  const limit = preloadConfig.cacheLimit;
-  if (!Number.isFinite(limit) || cache.size <= limit) return;
-  const entries = Array.from(cache.entries()).sort((a, b) => (a[1].at || 0) - (b[1].at || 0));
-  while (cache.size > limit && entries.length) {
-    const [id, entry] = entries.shift();
-    try { URL.revokeObjectURL(entry.url); } catch (_) {}
-    cache.delete(id);
-  }
-}
-
-function startPrefetch(track) {
-  const key = trackCacheKey(track);
-  if (!key) return;
-  const { preload } = musicState;
-  if (preload.cache.has(key) || preload.pending.has(key)) return;
-
-  const fetchPromise = fetch(track.audioSrc)
-    .then(response => {
-      if (!response.ok) throw new Error(`prefetch_failed_${response.status}`);
-      return response.blob();
-    })
-    .then(blob => {
-      const url = URL.createObjectURL(blob);
-      rememberPrefetchedTrack(key, url, blob);
-      return url;
-    })
-    .catch(error => {
-      if (error?.name !== "AbortError") {
-        console.warn("[music] prefetch failed", track?.audioSrc, error);
-      }
-      return null;
-    })
-    .finally(() => {
-      preload.pending.delete(key);
-      preload.active = Math.max(0, preload.active - 1);
-      drainPrefetchQueue();
-    });
-
-  preload.pending.set(key, fetchPromise);
-  preload.active += 1;
-  return fetchPromise;
-}
-
-function drainPrefetchQueue() {
-  const { preload } = musicState;
-  while (preload.active < preloadConfig.concurrency && preload.queue.length) {
-    const track = preload.queue.shift();
-    if (!track) continue;
-    const key = trackCacheKey(track);
-    if (!key) continue;
-    if (preload.cache.has(key) || preload.pending.has(key)) {
-      continue;
-    }
-    startPrefetch(track);
-  }
-}
-
-function schedulePrefetch() {
-  const { queue, queueIndex, tracks, preload } = musicState;
-  if (!Array.isArray(queue) || queue.length <= 1) return;
-
-  const lookahead = Math.min(preloadConfig.lookahead, queue.length - 1);
-  const seen = new Set();
-  for (let step = 1; step <= lookahead; step += 1) {
-    const qIndex = (queueIndex + step) % queue.length;
-    const track = tracks[queue[qIndex]];
-    const key = trackCacheKey(track);
-    if (!key || seen.has(key)) continue;
-    if (preload.cache.has(key) || preload.pending.has(key)) {
-      seen.add(key);
-      continue;
-    }
-    if (preload.queue.some(item => trackCacheKey(item) === key)) {
-      seen.add(key);
-      continue;
-    }
-    preload.queue.push(track);
-    seen.add(key);
-  }
-
-  drainPrefetchQueue();
-}
-
-function getPlaybackSrc(track) {
-  return getCachedTrackSrc(track) || track?.audioSrc || "";
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   const loaderEl = document.getElementById("app-loader");
@@ -368,7 +245,7 @@ async function autoStart() {
 
   audio.muted = true;
   audio.volume = vol;
-  audio.src = getPlaybackSrc(track);
+  audio.src = track.audioSrc;
   audio.load();
   schedulePrefetch();
 
@@ -433,9 +310,6 @@ function buildQueue() {
   }
   musicState.queue = indices;
   musicState.queueIndex = 0;
-  if (musicState.preload) {
-    musicState.preload.queue.length = 0;
-  }
 }
 
 function playCurrentTrack() {
@@ -451,9 +325,8 @@ function playCurrentTrack() {
   setBlockMode("loading");
   renderTrack(track);
 
-  audio.src = getPlaybackSrc(track);
+  audio.src = track.audioSrc;
   audio.load();
-  schedulePrefetch();
   audio.muted = false;
   audio.volume = parseFloat(musicState.elements.volumeSlider?.value ?? musicConfig.defaultVolume) || musicConfig.defaultVolume;
 
